@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import mean_squared_error
 
 data_url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data'
 df_data = pd.read_csv(data_url)
@@ -25,4 +26,13 @@ print("model fit 완료")
 
 y_pred = model.predict(X_test)
 print("y_pred ====", y_pred)
+predictions = [round(value) for value in y_pred]
 print(accuracy_score(y_pred, y_test))
+
+# evaluate predictions
+mse = mean_squared_error(y_test, y_pred)
+print("====mse=====:", mse)
+
+# accuracy
+accuracy = accuracy_score(y_test, predictions)
+print("Accuracy: %.2f%%" % (accuracy * 100.0))
