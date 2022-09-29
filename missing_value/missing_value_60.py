@@ -1,26 +1,34 @@
+import xgboost as xgb
+from xgboost import plot_importance
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from xgboost import XGBClassifier
+import warnings
+from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import f1_score
+from sklearn.metrics import roc_auc_score
 
 data_url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data'
 df_data = pd.read_csv(data_url)
-col_data = df_data.columns = ['id', 'Clump Thickness', 'Uniformity of Cell Size', 'Uniformity of Cell Shape', 'Marginal Adhesion ', 'Single Epithelial Cell Size',
-                             'Bare Nuclei', 'Bland Chromatin', 'Normal Nucleoli', 'Mitoses', 'Class']
-df_data['Bare Nuclei'] = df_data['Bare Nuclei'].replace('?',0)
+col_data = df_data.columns = ['id', 'Clump Thickness', 'Uniformity of Cell Size', 'Uniformity of Cell Shape',
+                              'Marginal Adhesion ', 'Single Epithelial Cell Size',
+                              'Bare Nuclei', 'Bland Chromatin', 'Normal Nucleoli', 'Mitoses', 'Class']
+df_data['Bare Nuclei'] = df_data['Bare Nuclei'].replace('?', 0)
 df_data['Bare Nuclei'] = df_data['Bare Nuclei'].astype(int)
 df_data['Class'] = df_data['Class'].replace(2,0)
 df_data['Class'] = df_data['Class'].replace(4,1)
 
-
-# 40% data replace nan!!0번- 278번
-df_total = df_data.loc[:278]=np.nan
+# 60% data replace nan!!0번- 278번
+df_total = df_data.loc[:418]=np.nan
 df_t = df_data.fillna(0)
 
 ###model###
 train_col = ['id', 'Clump Thickness', 'Uniformity of Cell Size', 'Uniformity of Cell Shape', 'Marginal Adhesion ',
-             'Single Epithelial Cell Size','Bare Nuclei', 'Bland Chromatin', 'Normal Nucleoli', 'Mitoses']
+             'Single Epithelial Cell Size',
+             'Bare Nuclei', 'Bland Chromatin', 'Normal Nucleoli', 'Mitoses']
 # df_data[train_col]을 array 형태로 변경
 X_features = np.array(df_t[train_col])
 # df_data['Class'] : 판다스 series type을 array형태로 변경
