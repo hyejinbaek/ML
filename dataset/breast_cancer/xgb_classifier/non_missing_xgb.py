@@ -31,3 +31,4 @@ model.fit(X_features, y_label)
 X = cross_validate(model, X_features, y_label, cv = StratifiedKFold(n_splits=3, shuffle = True))
 Y = np.mean(X['test_score']), np.std(X['test_score'])
 print(Y)
+
