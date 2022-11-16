@@ -46,7 +46,7 @@ def set_missing_value(df: pd.DataFrame, ratio: float) -> Tuple[np.array, np.arra
 
     missing_length = int(len(df) * ratio)
 
-    print(f'{missing_length=}')
+    #print(f'{missing_length=}')
     
     df = df.copy()
     df.loc[:missing_length-1, train_col] = np.nan
@@ -60,12 +60,22 @@ def set_missing_value(df: pd.DataFrame, ratio: float) -> Tuple[np.array, np.arra
     # X: features matrix, y: label vector
     return X, y
 
-# xgboost classifier 을 이용할 때 결측치가 없을 때 성능 예측
-X, y = set_missing_value(df_data, 0)
-print(f'{X.shape=}', f'{y.shape=}')
-cross_valid(X, y)
 
-# xgb classifier을 이용하여 결측치 20% -> zero imputation
+# xgboost classifier 을 이용할 때 결측치 20% 성능 예측
 X, y = set_missing_value(df_data, 0.2)
 #cross_valid(X, y)
-print(cross_valid(X, y))
+print("missing data 20% === ", cross_valid(X, y))
+
+# xgb classifier을 이용하여 결측치 40%
+X, y = set_missing_value(df_data, 0.4)
+print("missing data 40% === ", cross_valid(X, y))
+
+
+# xgb classifier을 이용하여 결측치 60%
+X, y = set_missing_value(df_data, 0.6)
+print("missing data 60% === ", cross_valid(X, y))
+
+# xgb classifier을 이용하여 결측치 80%
+X, y = set_missing_value(df_data, 0.8)
+print("missing data 60% === ", cross_valid(X, y))
+

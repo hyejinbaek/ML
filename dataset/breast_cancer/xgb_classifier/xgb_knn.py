@@ -49,7 +49,7 @@ def set_missing_value(df: pd.DataFrame, ratio: float) -> Tuple[np.array, np.arra
     df.loc[:missing_length-1, train_col] = np.nan
     imputer = KNNImputer(n_neighbors=2)
     df_im = imputer.fit_transform(df)
-    df = pd.DataFrame(df)
+    df_im = pd.DataFrame(df_im, columns = df_data.columns)
 
     # df_data[train_col]을 array 형태로 변경
     X = df[train_col].to_numpy()
