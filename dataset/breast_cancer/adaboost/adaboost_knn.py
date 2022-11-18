@@ -28,7 +28,7 @@ def cross_valid(
     **kwargs,
 ):
     # model.fit(X_features, y_label) # !! cross_validate 에서 train 동작이 있으므로 지워야 하는 코드 !!
-    cv_result = cross_validate(model, X, y, cv=StratifiedKFold(n_splits=5, shuffle = True, random_state=42), scoring=scoring, **kwargs)
+    cv_result = cross_validate(model, X, y, cv=cv, scoring=scoring, **kwargs)
     for score_name in cv_result:
         if 'test' in score_name:
             test_score_mean, test_score_std = np.mean(cv_result[score_name]), np.std(cv_result[score_name])
